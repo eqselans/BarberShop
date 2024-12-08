@@ -1,0 +1,24 @@
+﻿@model IEnumerable<BarberShop.Models.Service>
+
+<div class="container mt-5">
+    <h2>Hizmetler</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Fiyat</th>
+                <th>Açıklama</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var service in Model)
+            {
+                <tr>
+                    <td>@service.Name</td>
+                    <td>@service.Price.ToString("C")</td>
+                    <td>@service.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

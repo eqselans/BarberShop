@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Kuaför Sitesi - Anasayfa";
+}
+
+<!-- Gradient Navbar -->
+<nav class="navbar navbar-expand-lg" style="background: linear-gradient(90deg, #ff7eb3, #ff758c, #fe5d6e);">
+    <div class="container">
+        <a class="navbar-brand text-white fw-bold" href="#">Kuaför</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-bold" href="/">Anasayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-bold" href="/Services">Hizmetler</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-bold" href="/Contact">İletişim</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Ana İçerik -->
+<div class="container py-5">
+    <div class="text-center">
+        <h1 class="display-4 fw-bold">Hoş Geldiniz!</h1>
+        <p class="lead">Kuaför hizmetlerimizle tarzınızı yeniden keşfedin.</p>
+        <a href="/Appointment/Create" class="btn btn-primary btn-lg">Randevu Al</a>
+    </div>
+
+    <!-- Hizmetler -->
+    <div class="row text-center mt-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header" style="background: linear-gradient(90deg, #ff758c, #fe5d6e); color: white;">
+                    <h5 class="card-title">Saç Kesimi</h5>
+                </div>
+                <div class="card-body">
+                    <p>Profesyonel saç kesimi hizmetlerimizle kendinizi yenileyin.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header" style="background: linear-gradient(90deg, #7a81ff, #5d63fe); color: white;">
+                    <h5 class="card-title">Saç Boyama</h5>
+                </div>
+                <div class="card-body">
+                    <p>Modern saç renkleri ile tarzınızı değiştirin.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header" style="background: linear-gradient(90deg, #6effd5, #57efc6); color: white;">
+                    <h5 class="card-title">Cilt Bakımı</h5>
+                </div>
+                <div class="card-body">
+                    <p>Cildinizin ışıldaması için profesyonel bakım.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gradient Footer -->
+<footer class="text-white text-center py-3" style="background: linear-gradient(90deg, #6a11cb, #2575fc);">
+    <p class="mb-0">© 2024 Kuaför. Tüm Hakları Saklıdır.</p>
+    <p class="mb-0">
+        Bizi takip edin:
+        <a href="#" class="text-light fw-bold">Instagram</a> |
+        <a href="#" class="text-light fw-bold">Facebook</a>
+    </p>
+</footer>
