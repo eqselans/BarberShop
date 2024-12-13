@@ -24,7 +24,8 @@ namespace BarberShop.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Services = _context.Services.ToList();
+            var services = _context.Services.ToList(); // Bu satır artık hatasız çalışmalıdır
+            ViewBag.Services = services;
             return View();
         }
 
