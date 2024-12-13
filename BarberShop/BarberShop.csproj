@@ -20,4 +20,10 @@
     <Folder Include="Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\fonts\.DS_Store" />
+    <None Include="wwwroot\images\.DS_Store" />
+    <None Include="wwwroot\js\.DS_Store" />
+  </ItemGroup>
+
 </Project>
