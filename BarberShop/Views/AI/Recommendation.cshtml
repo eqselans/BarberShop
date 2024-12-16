@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Yapay Zeka Önerisi";
+}
+<h1>Yapay Zeka Önerisi Al</h1>
+<form asp-action="Recommendation" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="UploadedImage">Resim Yükle</label>
+        <input type="file" name="UploadedImage" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Öneri Al</button>
+</form>

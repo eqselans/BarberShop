@@ -1,35 +1,21 @@
 ﻿@model IEnumerable<BarberShop.Models.Service>
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Hizmetlerimiz</h2>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Ad</th>
-                    <th scope="col">Fiyat</th>
-                    <th scope="col">Açıklama</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.Any())
-                {
-                    @foreach (var service in Model)
-                    {
-                        <tr>
-                            <td>@service.Name</td>
-                            <td>@service.Price.ToString("C")</td>
-                            <td>@service.Description</td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="3" class="text-center">Hiçbir hizmet bulunamadı.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    @{
+    ViewData["Title"] = "Hizmetlerimiz";
+    }
+    <h1>Hizmetlerimiz</h1>
+    <div class="row">
+        @foreach (var service in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="@service.ImageUrl" class="card-img-top" alt="@service.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@service.Name</h5>
+                    <p class="card-text">@service.Description</p>
+                    <p><strong>Fiyat:</strong> @service.Price ₺</p>
+                </div>
+            </div>
+        </div>
+    }
     </div>
-</div>

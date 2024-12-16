@@ -1,0 +1,10 @@
+﻿@model BarberShop.Models.Service
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+<h1>@Model.Name</h1>
+<p>@Model.Description</p>
+<p><strong>Süre:</strong> @Model.DurationInMinutes dakika</p>
+<p><strong>Fiyat:</strong> @Model.Price ₺</p>
+<a class="btn btn-primary" href="/Appointments/Create">Randevu Al</a>
