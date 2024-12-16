@@ -1,0 +1,13 @@
+@model IEnumerable<BarberShop.Models.Testimonial>
+
+    @{
+    ViewData["Title"] = "Müþteri Yorumlarý";
+    }
+    <h1>Müþteri Yorumlarý</h1>
+    @foreach (var testimonial in Model)
+{
+    <blockquote>
+        <p>@testimonial.Text</p>
+        <footer>@testimonial.UserId</footer>
+    </blockquote>
+}
