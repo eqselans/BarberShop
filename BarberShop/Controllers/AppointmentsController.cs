@@ -1,44 +1,35 @@
-﻿using BarberShop.Models;
-using Microsoft.AspNetCore.Mvc;
-using BarberShop.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using BarberShop.Models;
 
 namespace BarberShop.Controllers
 {
-    public class AppointmentsController : Controller
-    {
-        private readonly ApplicationDbContext _context;
+	public class AppointmentsController : Controller
+	{
+		public IActionResult Index()
+		{
+			var appointments = new List<Appointment>
+			{
+				new Appointment { Id = 1, UserId = "user1", EmployeeId = 1, ServiceId = 1, AppointmentDate = DateTime.Now.AddDays(1), Status = "Onaylandı" },
+				new Appointment { Id = 2, UserId = "user2", EmployeeId = 2, ServiceId = 2, AppointmentDate = DateTime.Now.AddDays(2), Status = "Beklemede" }
+			};
 
-        public AppointmentsController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+			return View(appointments);
+		}
 
-        public async Task<IActionResult> Index()
-        {
-            var appointments = await _context.Appointments
-                .Include(a => a.Service)
-                .ToListAsync();
-            return View(appointments);
-        }
+		public IActionResult Create()
+		{
+			return View();
+		}
 
-        public IActionResult Create()
-        {
-            var services = _context.Services.ToList(); // Bu satır artık hatasız çalışmalıdır
-            ViewBag.Services = services;
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(Appointment appointment)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Appointments.Add(appointment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(appointment);
-        }
-    }
+		[HttpPost]
+		public IActionResult Create(Appointment appointment)
+		{
+			if (ModelState.IsValid)
+			{
+				// Randevu kaydı yapılabilir.
+				return RedirectToAction("Index");
+			}
+			return View(appointment);
+		}
+	}
 }
