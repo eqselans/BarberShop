@@ -1,0 +1,17 @@
+﻿@model BarberShop.Models.Testimonial
+
+<h1>Add Testimonial</h1>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label for="UserId">User ID:</label>
+        <input type="text" id="UserId" name="UserId" asp-for="UserId" />
+    </div>
+
+    <div>
+        <label for="Text">Testimonial:</label>
+        <textarea id="Text" name="Text" asp-for="Text"></textarea>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>

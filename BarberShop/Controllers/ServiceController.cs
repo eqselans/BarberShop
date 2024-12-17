@@ -1,35 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BarberShop.Models;
+using BarberShop.Data; // ApplicationDbContext için
+using BarberShop.Models; // Service modeli için
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BarberShop.Controllers
 {
-	public class ServicesController : Controller
-	{
-		public IActionResult Index()
-		{
-			var services = new List<Service>
-			{
-				new Service { Id = 1, Name = "Geleneksel Kesim", Description = "Alışılagelmiş tıraş yöntemleri", DurationInMinutes = 30, Price = 400, ImageUrl = "/images/service-icon-1.png" },
-				new Service { Id = 2, Name = "Bıyık Kesimi", Description = "Şık ve modern bıyık kesimi", DurationInMinutes = 15, Price = 150, ImageUrl = "/images/service-icon-2.png" },
-				new Service { Id = 3, Name = "Sakal Kesimi", Description = "Farklı ve gelişmiş sakal kesim yöntemleri", DurationInMinutes = 20, Price = 150, ImageUrl = "/images/service-icon-3.png" }
-			};
+    public class ServicesController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-			return View(services);
-		}
+        // Constructor ile DbContext'i enjekte ediyoruz
+        public ServicesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-		public IActionResult Details(int id)
-		{
-			var service = new Service
-			{
-				Id = id,
-				Name = "Geleneksel Kesim",
-				Description = "Detaylı açıklama",
-				DurationInMinutes = 30,
-				Price = 400,
-				ImageUrl = "/images/service-icon-1.png"
-			};
+        // GET: Tüm Hizmetleri Listeleme
+        public IActionResult Index()
+        {
+            // Veritabanından tüm hizmetleri çekiyoruz
+            var services = _context.Services.ToList();
+            return View(services);
+        }
 
-			return View(service);
-		}
-	}
+        // GET: Tek Bir Hizmetin Detaylarını Gösterme
+        public async Task<IActionResult> Details(int id)
+        {
+            // Veritabanından ID'ye göre hizmet çekiyoruz
+            var service = await _context.Services.FindAsync(id);
+
+            // Eğer hizmet bulunamazsa 404 hatası döndür
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            return View(service);
+        }
+    }
 }

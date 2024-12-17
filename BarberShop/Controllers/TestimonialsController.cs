@@ -1,35 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BarberShop.Data;
 using BarberShop.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BarberShop.Controllers
 {
-	public class TestimonialsController : Controller
-	{
-		public IActionResult Index()
-		{
-			var testimonials = new List<Testimonial>
-			{
-				new Testimonial { Id = 1, UserId = "user1", Text = "Hizmet çok iyiydi, teşekkür ederim!" },
-				new Testimonial { Id = 2, UserId = "user2", Text = "Harika bir deneyim yaşadım." }
-			};
+    public class TestimonialsController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-			return View(testimonials);
-		}
+        public TestimonialsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-		public IActionResult Create()
-		{
-			return View();
-		}
+        public async Task<IActionResult> Index()
+        {
+            var testimonials = await _context.Testimonials.ToListAsync();
+            return View(testimonials);
+        }
 
-		[HttpPost]
-		public IActionResult Create(Testimonial testimonial)
-		{
-			if (ModelState.IsValid)
-			{
-				// Yorum kaydı yapılabilir.
-				return RedirectToAction("Index");
-			}
-			return View(testimonial);
-		}
-	}
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Testimonial testimonial)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(testimonial);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(testimonial);
+        }
+    }
 }

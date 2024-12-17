@@ -1,35 +1,61 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using BarberShop.Data;
 using BarberShop.Models;
+using BarberShop.ViewModels;
 
 namespace BarberShop.Controllers
 {
-	public class AppointmentsController : Controller
-	{
-		public IActionResult Index()
-		{
-			var appointments = new List<Appointment>
-			{
-				new Appointment { Id = 1, UserId = "user1", EmployeeId = 1, ServiceId = 1, AppointmentDate = DateTime.Now.AddDays(1), Status = "Onaylandı" },
-				new Appointment { Id = 2, UserId = "user2", EmployeeId = 2, ServiceId = 2, AppointmentDate = DateTime.Now.AddDays(2), Status = "Beklemede" }
-			};
+    public class AppointmentsController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-			return View(appointments);
-		}
+        public AppointmentsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-		public IActionResult Create()
-		{
-			return View();
-		}
+        // GET: Create Randevu Sayfası
+        public IActionResult Create()
+        {
+            // Service ve Employee verilerini alıp SelectList'e dönüştürüyoruz
+            ViewBag.Services = new SelectList(_context.Services.ToList(), "Id", "Name");
+            ViewBag.Employees = new SelectList(_context.Employees.ToList(), "Id", "Name");
 
-		[HttpPost]
-		public IActionResult Create(Appointment appointment)
-		{
-			if (ModelState.IsValid)
-			{
-				// Randevu kaydı yapılabilir.
-				return RedirectToAction("Index");
-			}
-			return View(appointment);
-		}
-	}
+            var viewModel = new AppointmentViewModel
+            {
+                AppointmentDate = DateTime.Now
+            };
+
+            return View(viewModel);
+        }
+
+        // POST: Yeni Randevu Kaydetme
+        [HttpPost]
+        public IActionResult Create(AppointmentViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var appointment = new Appointment
+                {
+                    ServiceId = viewModel.ServiceId,
+                    EmployeeId = viewModel.EmployeeId,
+                    AppointmentDate = viewModel.AppointmentDate,
+                    Status = "Beklemede",
+                    UserId = "12345" // Örnek kullanıcı ID, gerçek oturumdan alınabilir
+                };
+
+                _context.Appointments.Add(appointment);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Appointments");
+            }
+
+            // Hata durumunda dropdownların tekrar doldurulması
+            ViewBag.Services = new SelectList(_context.Services.ToList(), "Id", "Name");
+            ViewBag.Employees = new SelectList(_context.Employees.ToList(), "Id", "Name");
+
+            return View(viewModel);
+        }
+    }
 }

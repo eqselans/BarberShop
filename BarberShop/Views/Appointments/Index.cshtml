@@ -17,8 +17,8 @@
         @foreach (var appointment in Model)
         {
             <tr>
-                <td>@appointment.ServiceName</td>
-                <td>@appointment.EmployeeName</td>
+                <td>@appointment.ServiceId</td>
+                <td>@appointment.EmployeeId</td>
                 <td>@appointment.AppointmentDate.ToString("dd/MM/yyyy HH:mm")</td>
                 <td>@appointment.Status</td>
             </tr>

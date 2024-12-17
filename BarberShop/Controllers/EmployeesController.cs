@@ -1,31 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BarberShop.Models;
+using BarberShop.Data; // DbContext için
+using BarberShop.Models; // Model için
+using System.Linq; // LINQ için
+using System.Threading.Tasks;
 
 namespace BarberShop.Controllers
 {
-	public class EmployeesController : Controller
-	{
-		public IActionResult Index()
-		{
-			var employees = new List<Employee>
-			{
-				new Employee { Id = 1, Name = "Ahmet Yılmaz", Specialization = "Berber" },
-				new Employee { Id = 2, Name = "Mehmet Kaya", Specialization = "Kuaför" }
-			};
+    public class EmployeesController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-			return View(employees);
-		}
+        // Constructor ile DbContext'i enjekte ediyoruz
+        public EmployeesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-		public IActionResult Details(int id)
-		{
-			var employee = new Employee
-			{
-				Id = id,
-				Name = "Ahmet Yılmaz",
-				Specialization = "Berber"
-			};
+        // Tüm çalışanları listeleme (Index)
+        public async Task<IActionResult> Index()
+        {
+            // Veritabanından çalışanları çekiyoruz
+            var employees = _context.Employees.ToList();
+            return View(employees);
+        }
 
-			return View(employee);
-		}
-	}
+        // Tek bir çalışanın detaylarını gösterme (Details)
+        public async Task<IActionResult> Details(int id)
+        {
+            // Veritabanından ID'ye göre çalışanın verisini çekiyoruz
+            var employee = await _context.Employees.FindAsync(id);
+
+            // Eğer çalışan bulunamazsa 404 hatası döndür
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+    }
 }
