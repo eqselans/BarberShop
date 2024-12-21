@@ -2,8 +2,8 @@
 
 namespace BarberShop.Models
 {
-	public class User : IdentityUser
-	{
-		public string FullName { get; set; }
-	}
+    public class User : IdentityUser
+    {
+        // Ek özellikler buraya eklenebilir (örnek: AdSoyad, ProfilFotoğrafı vs.)
+    }
 }

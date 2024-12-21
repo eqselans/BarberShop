@@ -1,17 +1,26 @@
 ﻿@model BarberShop.Models.Testimonial
 
-<h1>Add Testimonial</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Yorum Ekle</h1>
 
-<form asp-action="Create" method="post">
-    <div>
-        <label for="UserId">User ID:</label>
-        <input type="text" id="UserId" name="UserId" asp-for="UserId" />
-    </div>
+    <form asp-action="Create" method="post" class="p-4 border rounded shadow-sm bg-light">
+        <!-- Kullanıcı ID Alanı -->
+        <div class="form-group">
+            <label for="UserId" class="form-label">Kullanıcı ID:</label>
+            <input type="text" id="UserId" name="UserId" asp-for="UserId" class="form-control" placeholder="Kullanıcı ID girin" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
 
-    <div>
-        <label for="Text">Testimonial:</label>
-        <textarea id="Text" name="Text" asp-for="Text"></textarea>
-    </div>
+        <!-- Yorum Alanı -->
+        <div class="form-group mt-3">
+            <label for="Text" class="form-label">Yorum:</label>
+            <textarea id="Text" name="Text" asp-for="Text" class="form-control" rows="5" placeholder="Yorumunuzu yazın"></textarea>
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
 
-    <button type="submit">Submit</button>
-</form>
+        <!-- Gönderme Düğmesi -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">Gönder</button>
+        </div>
+    </form>
+</div>
