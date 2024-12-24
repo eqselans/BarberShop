@@ -3,19 +3,33 @@
 @{
     ViewData["Title"] = "Giriþ Yap";
 }
-<h1>Giriþ Yap</h1>
-<form asp-action="Login" method="post">
-    <div class="form-group">
-        <label for="Email">E-posta</label>
-        <input asp-for="Email" class="form-control" />
+
+<h2>Giriþ Yap</h2>
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="card shadow-sm" style="width: 400px; border-radius: 15px; transition: transform 0.5s;">
+        <div class="card-body">
+            <h3 class="card-title text-center text-bold">Giriþ Yap</h3>
+            <form asp-action="Login" method="post">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" class="form-control" required />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="password">Þifre:</label>
+                    <input type="password" name="password" id="password" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-primary mt-4 w-100">Giriþ Yap</button>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="Password">Þifre</label>
-        <input asp-for="Password" type="password" class="form-control" />
-    </div>
-    <div class="form-check">
-        <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
-        <label asp-for="RememberMe" class="form-check-label">Beni Hatýrla</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Giriþ Yap</button>
-</form>
+</div>
+
+<style>
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+

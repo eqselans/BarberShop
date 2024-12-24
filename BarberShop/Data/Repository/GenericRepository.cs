@@ -1,8 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace BarberShop.Data.Repository
 {

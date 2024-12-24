@@ -1,0 +1,30 @@
+﻿@model BarberShop.Models.Service
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Hizmet Düzenle";
+}
+
+<h2>Hizmet Düzenle</h2>
+
+<form asp-action="EditService" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label>Ad:</label>
+        <input type="text" asp-for="Name" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Açıklama:</label>
+        <textarea asp-for="Description" class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+        <label>Süre (dakika):</label>
+        <input type="number" asp-for="DurationInMinutes" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Fiyat:</label>
+        <input type="number" asp-for="Price" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a href="@Url.Action("ManageServices", "Admin")" class="btn btn-secondary">İptal</a>
+</form>

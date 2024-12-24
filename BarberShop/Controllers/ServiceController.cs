@@ -1,8 +1,8 @@
-﻿using BarberShop.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BarberShop.Data;
-
+﻿using Microsoft.AspNetCore.Mvc;
+using BarberShop.Data; // ApplicationDbContext için
+using BarberShop.Models; // Service modeli için
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BarberShop.Controllers
 {
@@ -10,31 +10,32 @@ namespace BarberShop.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        // Constructor ile DbContext'i enjekte ediyoruz
         public ServicesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        // GET: Tüm Hizmetleri Listeleme
+        public IActionResult Index()
         {
-            var services = await _context.Services.ToListAsync();
+            // Veritabanından tüm hizmetleri çekiyoruz
+            var services = _context.Services.ToList();
             return View(services);
         }
 
-        public IActionResult Create()
+        // GET: Tek Bir Hizmetin Detaylarını Gösterme
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
-        }
+            // Veritabanından ID'ye göre hizmet çekiyoruz
+            var service = await _context.Services.FindAsync(id);
 
-        [HttpPost]
-        public async Task<IActionResult> Create(Service service)
-        {
-            if (ModelState.IsValid)
+            // Eğer hizmet bulunamazsa 404 hatası döndür
+            if (service == null)
             {
-                _context.Services.Add(service);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
+
             return View(service);
         }
     }

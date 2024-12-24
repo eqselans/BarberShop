@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h1 class="text-center">Admin Paneline Hoş Geldiniz</h1>
+<p class="text-center">Sistemi yönetmek için yukarıdaki menüyü kullanabilirsiniz.</p>
+
+<div class="row mt-5">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Hizmet Yönetimi</h5>
+                <a href="/Admin/ManageServices" class="btn btn-primary">Görüntüle</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Randevu Yönetimi</h5>
+                <a href="/Admin/ManageAppointments" class="btn btn-primary">Görüntüle</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Kullanıcı Yönetimi</h5>
+                <a href="/Admin/ManageUsers" class="btn btn-primary">Görüntüle</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Çalışan Yönetimi</h5>
+                <a href="/Admin/ManageEmployee" class="btn btn-primary">Görüntüle</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Raporlar</h5>
+                <a href="/Admin/Reports" class="btn btn-primary">Görüntüle</a>
+            </div>
+        </div>
+    </div>
+</div>

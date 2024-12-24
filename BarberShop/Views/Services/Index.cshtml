@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<BarberShop.Models.Service>
 
-    @{
+@{
     ViewData["Title"] = "Hizmetlerimiz";
-    }
-    <h1>Hizmetlerimiz</h1>
-    <div class="row">
-        @foreach (var service in Model)
+}
+<h1>Hizmetlerimiz</h1>
+<div class="row">
+    @foreach (var service in Model)
     {
         <div class="col-md-4">
             <div class="card mb-4">
@@ -18,4 +18,4 @@
             </div>
         </div>
     }
-    </div>
+</div>

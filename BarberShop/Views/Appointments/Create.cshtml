@@ -3,26 +3,48 @@
 @{
     ViewData["Title"] = "Yeni Randevu Al";
 }
+
 <h1>Yeni Randevu Al</h1>
+
+<!-- ValidationSummary: Genel hata mesajlarını göstermek için -->
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
 <form asp-action="Create" method="post">
     <div class="form-group">
-        <label for="ServiceId">Hizmet</label>
-        <select asp-for="ServiceId" class="form-control">
-            <option value="1">Geleneksel Kesim</option>
-            <option value="2">Bıyık Kesimi</option>
-            <option value="3">Sakal Kesimi</option>
+        <label for="ServiceId">Hizmet Seçin</label>
+        <select asp-for="ServiceId" asp-items="ViewBag.Services" class="form-control">
+            <option value="">Hizmet Seçin</option>
         </select>
+        <span asp-validation-for="ServiceId" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label for="EmployeeId">Çalışan</label>
-        <select asp-for="EmployeeId" class="form-control">
-            <option value="1">Ahmet Yılmaz</option>
-            <option value="2">Mehmet Kaya</option>
+        <label for="EmployeeId">Çalışan Seçin</label>
+        <select asp-for="EmployeeId" asp-items="ViewBag.Employees" class="form-control">
+            <option value="">Çalışan Seçin</option>
         </select>
+        <span asp-validation-for="EmployeeId" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label for="AppointmentDate">Tarih ve Saat</label>
+        <label for="AppointmentDate">Randevu Tarihi</label>
         <input asp-for="AppointmentDate" type="datetime-local" class="form-control" />
+        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Kaydet</button>
+
+    <button type="submit" class="btn btn-primary">Randevu Al</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

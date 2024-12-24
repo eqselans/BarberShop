@@ -1,13 +1,33 @@
 @model IEnumerable<BarberShop.Models.Testimonial>
 
-    @{
-    ViewData["Title"] = "Müþteri Yorumlarý";
-    }
-    <h1>Müþteri Yorumlarý</h1>
-    @foreach (var testimonial in Model)
-{
-    <blockquote>
-        <p>@testimonial.Text</p>
-        <footer>@testimonial.UserId</footer>
-    </blockquote>
-}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Müþteri Yorumlarý</h1>
+
+    <!-- Testimonials Tablosu -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Kullanýcý</th>
+                    <th scope="col">Yorum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var testimonial in Model)
+                {
+                    <tr>
+                        <td>@testimonial.UserId</td>
+                        <td>@testimonial.Text</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Testimonial Button -->
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-lg">
+            Yorum Ekle
+        </a>
+    </div>
+</div>
