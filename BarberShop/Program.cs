@@ -1,5 +1,6 @@
 using BarberShop.Data;
 using BarberShop.Models;
+using BarberShop.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,28 @@ builder.Services.AddIdentity<User,Role>()
 // Razor Pages ve MVC desteði
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IRegisterService, RegisterService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAppointmentService, AppointmentService>();
+builder.Services.AddTransient<IServiceService, ServiceService>();
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+
+
+
+
+
+
+// CORS yapýlandýrmasý
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("https://localhost:44348") // API'nin eriþimine izin vereceðiniz kaynak
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Middleware
@@ -30,6 +53,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication(); // Kimlik doðrulama
 app.UseAuthorization();  // Yetkilendirme

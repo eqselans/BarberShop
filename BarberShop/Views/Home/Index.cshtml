@@ -2,9 +2,8 @@
     ViewData["Title"] = "Anasayfa";
 }
 
-
 <!-- Slider Başlangıcı -->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide mb-5" data-bs-ride="carousel">
     <!-- Slider Göstergeleri -->
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -18,7 +17,7 @@
         <div class="carousel-item active">
             <img src="/images/service-single.jpg" class="d-block w-100" alt="Geleneksel Kesim" style="height: 500px; object-fit: cover;">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Geleneksel Kesim</h5>
+                <h5 class="text-light p-2 d-inline-block">Geleneksel Kesim</h5>
                 <p>Klasiğin modern haliyle tarzınızı yansıtın.</p>
             </div>
         </div>
@@ -27,7 +26,7 @@
         <div class="carousel-item">
             <img src="/images/post-img-2.jpg" class="d-block w-100" alt="Bıyık Kesimi" style="height: 500px; object-fit: cover;">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Bıyık Kesimi</h5>
+                <h5 class="text-light p-2 d-inline-block">Bıyık Kesimi</h5>
                 <p>Şıklığı detaylarda yakalayın.</p>
             </div>
         </div>
@@ -36,7 +35,7 @@
         <div class="carousel-item">
             <img src="/images/post-img-1.jpg" class="d-block w-100" alt="Sakal Kesimi" style="height: 500px; object-fit: cover;">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Sakal Kesimi</h5>
+                <h5 class="text-light p-2 d-inline-block">Sakal Kesimi</h5>
                 <p>En iyi sakal stilleri için profesyonel dokunuş.</p>
             </div>
         </div>
@@ -57,4 +56,65 @@
     <p>Tarzınızı bulun, hizmetlerimizden faydalanın ve hemen randevu alın!</p>
     <a class="btn btn-primary btn-lg" href="/Appointments/Create">Randevu Al</a>
 </div>
+<!-- Hizmetler Bölümü -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Hizmetlerimiz</h2>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <img src="/images/service-icon-1.png" class="rounded-circle mb-3" alt="Geleneksel Kesim" style="height: 150px;">
+            <h4>Geleneksel Kesim</h4>
+            <p>Klasiğin modern haliyle tarzınızı yansıtın.</p>
+        </div>
+        <div class="col-md-4">
+            <img src="/images/service-icon-2.png" class="rounded-circle mb-3" alt="Bıyık Kesimi" style="height: 150px;">
+            <h4>Bıyık Kesimi</h4>
+            <p>Şıklığı detaylarda yakalayın.</p>
+        </div>
+        <div class="col-md-4">
+            <img src="/images/service-icon-3.png" class="rounded-circle mb-3" alt="Sakal Kesimi" style="height: 150px;">
+            <h4>Sakal Kesimi</h4>
+            <p>Profesyonel sakal stilleri için bize gelin.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Çalışma Saatleri ve İletişim -->
+<div class="bg-light py-5 mt-5">
+    <div class="container">
+        <div class="mb-3">
+            <h3>Çalışma Saatlerimiz</h3>
+            <ul class="list-group">
+                <li class="list-group-item">Pazartesi - Cuma: 09:00 - 19:00</li>
+                <li class="list-group-item">Cumartesi: 10:00 - 18:00</li>
+                <li class="list-group-item">Pazar: Kapalı</li>
+            </ul>
+        </div>
+    </div>
+        <div class="row">
+            <!-- Çalışma Saatleri -->
+            <div class="col-md-4 ml-3">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2788.0553179749645!2d30.32791129818206!3d40.74257086989152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14ccaded70ee240b%3A0xd81085b5551312fd!2sBilgisayar%20Ve%20Bili%C5%9Fim%20Bilimleri%20Fak%C3%BCltesi!5e0!3m2!1str!2str!4v1735042126387!5m2!1str!2str" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <!-- İletişim -->
+            <div class="col-md-6">
+                <h3>Bize Ulaşın</h3>
+                <p><strong>Adres:</strong> 1234 Kuaför Sokak, Berber Mahallesi, İstanbul</p>
+                <p><strong>Telefon:</strong> +90 555 555 5555</p>
+                <p><strong>Email:</strong> info@berbersitesi.com</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Hakkımızda -->
+<div class="container mt-3">
+    <h2 class="text-center mb-4">Hakkımızda</h2>
+    <p class="text-center mb-5">
+        Kuaför ve Berber Yönetim Sistemi, modern tarzlar ve geleneksel hizmetleri bir araya getiren profesyonel bir hizmet sunar. 
+        Müşterilerimizin ihtiyaçlarına göre tasarlanmış hizmetlerimiz ile kendinizi özel hissedin.
+    </p>
+</div>
+
 

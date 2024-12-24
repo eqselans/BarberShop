@@ -3,9 +3,11 @@ using BarberShop.Data; // DbContext için
 using BarberShop.Models; // Model için
 using System.Linq; // LINQ için
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BarberShop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;

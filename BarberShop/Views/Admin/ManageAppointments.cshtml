@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BarberShop.Models.Appointment>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Randevu Yönetimi";
+}
+
+<h2>Randevu Yönetimi</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Müşteri</th>
+            <th>Hizmet</th>
+            <th>Çalışan</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.Id</td>
+                <td>@appointment.UserName</td>
+                <td>@appointment.PhoneNumber</td>
+                <td>@appointment.Service.Name</td>
+                <td>@appointment.Employee.Name</td>
+                <td>@appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@appointment.Status</td>
+                <td>
+                    <a href="@Url.Action("EditAppointment", "Admin", new { id = appointment.Id })" class="btn btn-primary btn-sm">Düzenle</a>
+                    <a href="@Url.Action("DeleteAppointment", "Admin", new { id = appointment.Id })" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

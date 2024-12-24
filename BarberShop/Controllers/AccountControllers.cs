@@ -9,6 +9,7 @@ namespace BarberShop.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly SignInManager<User> _logInManager; // Remove this line
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
@@ -24,19 +25,43 @@ namespace BarberShop.Controllers
 
         // POST: Login
         [HttpPost]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+                // Kullanıcıyı email ile bul
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    // Kullanıcı bulunamazsa hata ekle
+                    ModelState.AddModelError("", "Geçersiz email adresi veya şifre.");
+                    return View(model);
+                }
+
+                // Kullanıcı mail ve şifre doğrulama
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+
+                var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+                if (isAdmin)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
                 if (result.Succeeded)
                 {
+                    // Başarılı giriş -> Anasayfaya yönlendir
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Geçersiz giriş denemesi.");
+
+                // Giriş başarısız -> Hata mesajı ekle
+                ModelState.AddModelError("", "Geçersiz email adresi veya şifre.");
             }
-            return View();
+
+            // ModelState hataları varsa veya giriş başarısızsa sayfayı yeniden yükle
+            return View(model);
         }
+
 
         // GET: Register
         public IActionResult Register()

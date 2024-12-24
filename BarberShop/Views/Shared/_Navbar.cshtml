@@ -1,7 +1,8 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand d-flex align-items-center m-1" href="/">
         <!-- Logo -->
-        <img src="/images/rskveaxu.png" alt="Kuaför Sitesi Logosu" style="height: 40px; margin-right: 10px;"></a>
+        <img src="/images/rskveaxu.png" alt="Kuaför Sitesi Logosu" style="height: 40px; margin-right: 10px;">
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -24,12 +25,28 @@
 
         <!-- Sağ Menü -->
         <ul class="navbar-nav ms-auto m-1">
-            <li class="nav-item">
-                <a class="nav-link" href="/Account/Login">Giriş Yap</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Account/Register">Kayıt Ol</a>
-            </li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <!-- Kullanıcı oturum açmışsa -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @User.Identity.Name
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <a class="dropdown-item text-danger" href="/Account/Logout">Çıkış Yap</a>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <!-- Kullanıcı oturum açmamışsa -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/Account/Login">Giriş Yap</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Account/Register">Kayıt Ol</a>
+                </li>
+            }
         </ul>
     </div>
 </nav>

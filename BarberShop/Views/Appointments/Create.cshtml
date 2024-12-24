@@ -6,6 +6,19 @@
 
 <h1>Yeni Randevu Al</h1>
 
+<!-- ValidationSummary: Genel hata mesajlarını göstermek için -->
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
 <form asp-action="Create" method="post">
     <div class="form-group">
         <label for="ServiceId">Hizmet Seçin</label>

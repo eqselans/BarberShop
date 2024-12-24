@@ -1,0 +1,37 @@
+﻿@model IEnumerable<BarberShop.Models.Employee>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Çalışan Yönetimi";
+}
+
+<h2>Çalışan Yönetimi</h2>
+<a href="@Url.Action("AddEmployee", "Admin")" class="btn btn-success mb-3">Yeni Çalışan Ekle</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ad Soyad</th>
+            <th>Uzmanlık</th>
+            <th>Uygunluk Saatleri</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.Name</td>
+                <td>@employee.Specialization</td>
+                <td>@employee.Availability</td>
+                <td>
+                    <a href="@Url.Action("EditEmployee", "Admin", new { id = employee.Id })" class="btn btn-primary btn-sm">Düzenle</a>
+                    <a href="@Url.Action("DeleteEmployee", "Admin", new { id = employee.Id })" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
