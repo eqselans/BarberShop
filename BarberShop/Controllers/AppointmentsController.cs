@@ -50,14 +50,21 @@ namespace BarberShop.Controllers
                 var availabilityParts = employee.Availability.Split('-'); // Örn: "9:00-17:00"
 
                 if (availabilityParts.Length == 2 &&
-                    TimeSpan.TryParse(availabilityParts[0], out TimeSpan startWorkingHour) &&
-                    TimeSpan.TryParse(availabilityParts[1], out TimeSpan endWorkingHour))
+                    int.TryParse(availabilityParts[0], out int startHour) &&
+                    int.TryParse(availabilityParts[1], out int endHour))
                 {
-                    TimeSpan appointmentTime = viewModel.AppointmentDate.TimeOfDay;
+                    // Çalışma saatlerini TimeSpan'e çevir
+                    TimeSpan startWorkingHour = TimeSpan.FromHours(startHour); // Örn: 9 -> 09:00
+                    TimeSpan endWorkingHour = TimeSpan.FromHours(endHour);     // Örn: 19 -> 19:00
 
-                    if (appointmentTime < startWorkingHour || appointmentTime > endWorkingHour)
+                    // Randevu başlangıç ve bitiş saatlerini belirle
+                    TimeSpan appointmentStartTime = new TimeSpan(viewModel.AppointmentDate.Hour, viewModel.AppointmentDate.Minute, 0);
+                    TimeSpan appointmentEndTime = appointmentStartTime.Add(TimeSpan.FromMinutes(service.DurationInMinutes));
+
+                    // Çalışma saatleri kontrolü
+                    if (appointmentStartTime < startWorkingHour || appointmentEndTime > endWorkingHour)
                     {
-                        ModelState.AddModelError("", $"Randevu saati seçilen çalışanın çalışma saatleri ({startWorkingHour} - {endWorkingHour}) arasında olmalıdır.");
+                        ModelState.AddModelError("", $"Randevu saati seçilen çalışanın çalışma saatleri ({startWorkingHour:hh\\:mm} - {endWorkingHour:hh\\:mm}) arasında olmalıdır.");
                     }
                 }
                 else
@@ -86,6 +93,7 @@ namespace BarberShop.Controllers
                     AppointmentDate = viewModel.AppointmentDate,
                     Status = "Beklemede",
                     UserName = user.UserName,
+                    CreatedAt = DateTime.Now,
                     UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) // Oturumdaki kullanıcı ID'si
                 };
 

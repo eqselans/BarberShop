@@ -25,7 +25,6 @@
             <tr>
                 <td>@appointment.Id</td>
                 <td>@appointment.UserName</td>
-                <td>@appointment.PhoneNumber</td>
                 <td>@appointment.Service.Name</td>
                 <td>@appointment.Employee.Name</td>
                 <td>@appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</td>
@@ -38,3 +37,20 @@
         }
     </tbody>
 </table>
+
+<h2>Çalışan Yönetimi</h2>
+<ul id="employee-list"></ul>
+
+<script>
+    fetch('https://localhost:5001/api/EmployeesApi')
+        .then(response => response.json())
+        .then(data => {
+            const employeeList = document.getElementById('employee-list');
+            data.forEach(employee => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${employee.name} (${employee.specialization})`;
+                employeeList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error fetching employees:', error));
+</script>

@@ -1,8 +1,11 @@
 using BarberShop.Data;
 using BarberShop.Models;
 using BarberShop.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,20 +28,32 @@ builder.Services.AddTransient<IServiceService, ServiceService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
 
-
-
-
-
 // CORS yapýlandýrmasý
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", policy =>
+    options.AddPolicy("AllowAll", builder =>
     {
-        policy.WithOrigins("https://localhost:44348") // API'nin eriþimine izin vereceðiniz kaynak
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
     });
 });
+
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "BarberShop API",
+        Version = "v1",
+        Description = "BarberShop için REST API dokümantasyonu",
+    });
+});
+
+
+
+
 
 var app = builder.Build();
 
@@ -49,13 +64,26 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "BarberShop API v1");
+        c.RoutePrefix = "swagger"; // Swagger'ý kök dizinde göster
+    });
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 app.UseRouting();
 
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowAll");
 
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthentication(); // Kimlik doðrulama
 app.UseAuthorization();  // Yetkilendirme
 
