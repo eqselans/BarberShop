@@ -25,7 +25,7 @@ builder.Services.AddTransient<IServiceService, ServiceService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
 
-
+builder.Services.AddSingleton<HairstyleApiService>();
 
 
 

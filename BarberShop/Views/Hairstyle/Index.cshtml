@@ -1,0 +1,29 @@
+﻿@page
+@{
+    ViewData["Title"] = "Hairstyle Suggestions";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Upload Your Photo</h2>
+
+    <form asp-action="Suggest" method="post" class="p-4 border rounded shadow-sm bg-light">
+        <!-- Image URL Input -->
+        <div class="form-group">
+            <label for="imageUrl" class="form-label">Image URL:</label>
+            <input type="text" id="imageUrl" name="imageUrl" class="form-control" placeholder="Enter the image URL" required />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg w-100">Get Suggestions</button>
+        </div>
+    </form>
+
+    @if (ViewBag.Result != null)
+    {
+        <div class="mt-5">
+            <h3 class="text-center">API Response:</h3>
+            <pre class="p-3 border rounded bg-light">@ViewBag.Result</pre>
+        </div>
+    }
+</div>
