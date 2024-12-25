@@ -1,7 +1,7 @@
-﻿namespace BarberShop.Services
+﻿using BarberShop.Models;
+
+public interface IAIRecommendationService
 {
-	public interface IAIRecommendationService
-	{
-		Task<string> GenerateRecommendationAsync(string uploadedImagePath);
-	}
+    Task<string> GetHairstyleRecommendationAsync(IFormFile photo,string hairOption);
 }
+

@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "AI Fotoðraf Yükleme";
+}
+
+<h2>AI Destekli Saç Modeli Önerisi</h2>
+
+<form asp-action="UploadPhoto" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="photo">Fotoðraf Yükle</label>
+        <input type="file" id="photo" name="photo" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Fotoðraf Gönder</button>
+</form>
+
+@if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger mt-3">
+        @ViewData["ErrorMessage"]
+    </div>
+}

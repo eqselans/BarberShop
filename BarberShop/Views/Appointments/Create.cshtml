@@ -22,7 +22,7 @@
 <form asp-action="Create" method="post">
     <div class="form-group">
         <label for="ServiceId">Hizmet Seçin</label>
-        <select asp-for="ServiceId" asp-items="ViewBag.Services" class="form-control">
+        <select asp-for="ServiceId" asp-items="ViewBag.Services" class="form-control" required>
             <option value="">Hizmet Seçin</option>
         </select>
         <span asp-validation-for="ServiceId" class="text-danger"></span>
@@ -30,7 +30,7 @@
 
     <div class="form-group">
         <label for="EmployeeId">Çalışan Seçin</label>
-        <select asp-for="EmployeeId" asp-items="ViewBag.Employees" class="form-control">
+        <select asp-for="EmployeeId" asp-items="ViewBag.Employees" class="form-control" required>
             <option value="">Çalışan Seçin</option>
         </select>
         <span asp-validation-for="EmployeeId" class="text-danger"></span>

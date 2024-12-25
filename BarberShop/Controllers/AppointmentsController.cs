@@ -6,6 +6,7 @@ using BarberShop.ViewModels;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace BarberShop.Controllers
 {
@@ -21,6 +22,7 @@ namespace BarberShop.Controllers
         }
 
         // GET: Create Randevu Sayfası
+        [Authorize]
         public IActionResult Create()
         {
             // Service ve Employee verilerini alıp SelectList'e dönüştürüyoruz
@@ -35,6 +37,26 @@ namespace BarberShop.Controllers
             return View(viewModel);
         }
 
+
+
+        [Authorize] // Sadece giriş yapmış kullanıcılar erişebilir
+        public async Task<IActionResult> MyAppointments()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Oturumdaki kullanıcı ID'sini al
+            var appointments = await _context.Appointments
+                .Where(a => a.UserId == userId)
+                .Include(a => a.Service)
+                .Include(a => a.Employee)
+                .ToListAsync();
+
+            return View(appointments);
+        }
+
+
+
+
+
+
         // POST: Yeni Randevu Kaydetme
         [Authorize]
         [HttpPost]
@@ -44,6 +66,10 @@ namespace BarberShop.Controllers
             var employee = _context.Employees.FirstOrDefault(e => e.Id == viewModel.EmployeeId);
             var user = await _userManager.GetUserAsync(User);
 
+            if (viewModel.AppointmentDate < DateTime.Now)
+            {
+                ModelState.AddModelError("", "Randevu tarihi şu andan sonra olmalıdır.");
+            }
 
             if (!string.IsNullOrEmpty(employee?.Availability))
             {
@@ -72,6 +98,7 @@ namespace BarberShop.Controllers
                     ModelState.AddModelError("", "Çalışan çalışma saatleri bilgisi geçerli bir formatta değil.");
                 }
             }
+
             TimeSpan barberWorkingHour = new TimeSpan(9, 0, 0); // 9:00
             TimeSpan barberEndWorkingHour = new TimeSpan(19, 0, 0); // 19:00
 
@@ -80,6 +107,19 @@ namespace BarberShop.Controllers
                 ModelState.AddModelError("", "İş yeri çalışma saatleri dışında bir saat seçtiniz. Lütfen çalışma saatleri içinde bir saat seçin.");
             }
 
+            // Çalışanın başka bir randevusu var mı kontrolü
+            var appointmentStart = viewModel.AppointmentDate;
+            var appointmentEnd = appointmentStart.AddMinutes(service.DurationInMinutes);
+
+            var conflictingAppointment = _context.Appointments
+                .Where(a => a.EmployeeId == viewModel.EmployeeId)
+                .Where(a => a.AppointmentDate < appointmentEnd && a.AppointmentDate.AddMinutes(a.Service.DurationInMinutes) > appointmentStart)
+                .FirstOrDefault();
+
+            if (conflictingAppointment != null)
+            {
+                ModelState.AddModelError("", "Seçilen saatlerde çalışan zaten başka bir randevuda.");
+            }
 
             if (ModelState.IsValid)
             {

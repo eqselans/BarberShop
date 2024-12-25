@@ -26,6 +26,8 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAppointmentService, AppointmentService>();
 builder.Services.AddTransient<IServiceService, ServiceService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddHttpClient<IAIRecommendationService, AIRecommendationService>();
+
 
 
 // CORS yapýlandýrmasý

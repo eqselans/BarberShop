@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BarberShop.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Randevularım";
+}
+
+<h1>Randevularım</h1>
+
+@if (!Model.Any())
+{
+    <p>Henüz bir randevu almadınız.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Hizmet</th>
+                <th>Çalışan</th>
+                <th>Randevu Tarihi</th>
+                <th>Durum</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.Service.Name</td>
+                    <td>@appointment.Employee.Name</td>
+                    <td>@appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@appointment.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

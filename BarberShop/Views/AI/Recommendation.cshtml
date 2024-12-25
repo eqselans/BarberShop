@@ -1,11 +1,47 @@
 @{
-    ViewData["Title"] = "Yapay Zeka Önerisi";
+    ViewData["Title"] = "Yapay Zeka Saç Modeli Önerisi";
 }
-<h1>Yapay Zeka Önerisi Al</h1>
+
+<h1>Yapay Zeka Saç Modeli Önerisi</h1>
+
 <form asp-action="Recommendation" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="UploadedImage">Resim Yükle</label>
-        <input type="file" name="UploadedImage" class="form-control" />
+        <label for="photo">Fotoðraf Yükleyin:</label>
+        <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required />
     </div>
-    <button type="submit" class="btn btn-primary">Öneri Al</button>
+    <div class="row mt-3">
+        <div class="col-sm-12">
+            <label for="imageOptions" class="form-label">Select Image Option:</label>
+            <select id="hair_options" name="hair_options" class="form-select" required>
+                <option value="101">Kakül</option>
+                <option value="201">Uzun saç</option>
+                <option value="301">Kakül ile uzun saç</option>
+                <option value="401">Orta düzeyde saç artýrma</option>
+                <option value="402">Hafif saç artýrma</option>
+                <option value="403">Yoðun saç artýrma</option>
+                <option value="502">Hafif dalgalý saç</option>
+                <option value="503">Yoðun dalgalý saç</option>
+                <option value="603">Kýsa saç </option>
+                <option value="801">Sarýþýn</option>
+                <option value="901">Düz saç</option>
+                <option value="1001">Yaðsýz saç </option>
+                <option value="1101">Saç çizgisi doldurma</option>
+                <option value="1201">Pürüzsüz saç</option>
+                <option value="1301">Saç boþluklarýný doldurma</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Öneri Al</button>
+
 </form>
+
+@if (ViewBag.RecommendedImage != null)
+{
+    <div class="mt-5 text-center">
+        <h3>Önerilen Saç Modeli:</h3>
+        <img src="data:image/jpeg;base64,@ViewBag.RecommendedImage"
+             class="img-fluid"
+             alt="Önerilen Saç Modeli"
+             style="width: 300px; height: 300px; object-fit: cover; border: 1px solid #ccc; border-radius: 10px;" />
+    </div>
+}

@@ -15,12 +15,26 @@
             <li class="nav-item">
                 <a class="nav-link" href="/Services">Hizmetler</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Appointments">Randevular</a>
-            </li>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Appointments/MyAppointments">Randevularım</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/AI/Recommendation">Saç Modeli Önerisi</a>
+                </li>
+            }
             <li class="nav-item">
                 <a class="nav-link" href="/Testimonials">Yorumlar</a>
             </li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="/Admin">Admin Paneli</a>
+                </li>
+            }
+
         </ul>
 
         <!-- Sağ Menü -->

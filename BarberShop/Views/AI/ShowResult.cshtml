@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "AI Sonucu";
+}
+
+<h2>Önerilen Saç Modeli</h2>
+
+@if (ViewBag.Base64Image != null)
+{
+    <img src="data:image/jpeg;base64,@ViewBag.Base64Image" alt="Önerilen Saç Modeli" style="max-width: 100%; height: auto;" />
+}
+else
+{
+    <p>Sonuç görüntülenemiyor.</p>
+}
