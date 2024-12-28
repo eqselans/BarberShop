@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace BarberShop.Controllers
 {
-    [Authorize] // Yorum yapmak için giriş zorunluluğu
+     // Yorum yapmak için giriş zorunluluğu
     public class TestimonialsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,7 +22,7 @@ namespace BarberShop.Controllers
             var testimonials = await _context.Testimonials.ToListAsync();
             return View(testimonials);
         }
-
+        [Authorize]
         public IActionResult Create()
         {
             // Kullanıcı giriş yapmamışsa yönlendirme yapılır
@@ -35,6 +35,7 @@ namespace BarberShop.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(Testimonial testimonial)
         {
             if (ModelState.IsValid)
