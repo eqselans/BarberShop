@@ -9,6 +9,9 @@
 <div class="d-flex justify-content-center mt-5">
     <div class="card shadow-sm" style="width: 400px; border-radius: 15px; transition: transform 0.5s;">
         <div class="card-body">
+            <div class="text-danger">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
             <h3 class="card-title text-center text-bold">Giriþ Yap</h3>
             <form asp-action="Login" method="post">
                 <div class="form-group">

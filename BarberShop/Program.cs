@@ -14,7 +14,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Identity hizmetlerini ekle
-builder.Services.AddIdentity<User,Role>()
+builder.Services.AddIdentity<User,Role>(options =>
+{
+    // Þifre politikalarýný yapýlandýrma
+    options.Password.RequireDigit = false; // En az bir rakam gerektirir
+    options.Password.RequiredLength = 3; 
+    options.Password.RequireNonAlphanumeric = false; 
+    options.Password.RequireUppercase = false; 
+    options.Password.RequireLowercase = false;
+    options.Password.RequiredUniqueChars = 2; 
+
+    // Kullanýcý adý ve email politikalarý
+    options.User.RequireUniqueEmail = true; // E-posta adresi benzersiz olmalýdýr
+})
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 

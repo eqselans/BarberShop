@@ -4,17 +4,13 @@
     <h1 class="text-center mb-4">Yorum Ekle</h1>
 
     <form asp-action="Create" method="post" class="p-4 border rounded shadow-sm bg-light">
-        <!-- Kullanıcı ID Alanı -->
-        <div class="form-group">
-            <label for="UserId" class="form-label">Kullanıcı ID:</label>
-            <input type="text" id="UserId" name="UserId" asp-for="UserId" class="form-control" placeholder="Kullanıcı ID girin" />
-            <span asp-validation-for="UserId" class="text-danger"></span>
-        </div>
+        <!-- Kullanıcı Adı (Gizli) -->
+        <input type="hidden" asp-for="UserName" />
 
         <!-- Yorum Alanı -->
         <div class="form-group mt-3">
             <label for="Text" class="form-label">Yorum:</label>
-            <textarea id="Text" name="Text" asp-for="Text" class="form-control" rows="5" placeholder="Yorumunuzu yazın"></textarea>
+            <textarea id="Text" name="Text" asp-for="Text" class="form-control" rows="5" placeholder="Yorumunuzu yazın" required></textarea>
             <span asp-validation-for="Text" class="text-danger"></span>
         </div>
 

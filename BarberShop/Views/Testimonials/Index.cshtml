@@ -10,14 +10,16 @@
                 <tr>
                     <th scope="col">Kullanýcý</th>
                     <th scope="col">Yorum</th>
+                    <th scope="col">Tarih</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var testimonial in Model)
                 {
                     <tr>
-                        <td>@testimonial.UserId</td>
+                        <td>@testimonial.UserName.Substring(0, 3)***********</td>
                         <td>@testimonial.Text</td>
+                        <td>@testimonial.CreatedAt</td>
                     </tr>
                 }
             </tbody>

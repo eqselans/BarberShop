@@ -75,6 +75,21 @@ namespace BarberShop.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Email kontrolü
+                var emailExists = await _userManager.FindByEmailAsync(model.Email);
+                if (emailExists != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Bu e-posta adresi zaten kullanılıyor.");
+                    return View(model);
+                }
+
+                // Telefon numarası kontrolü
+                var phoneExists = _userManager.Users.Any(u => u.PhoneNumber == model.PhoneNumber);
+                if (phoneExists)
+                {
+                    ModelState.AddModelError(string.Empty, "Bu telefon numarası zaten kullanılıyor.");
+                    return View(model);
+                }
                 var user = new User
                 {
                     FullName = model.FullName,

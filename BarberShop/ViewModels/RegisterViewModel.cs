@@ -13,7 +13,7 @@ namespace BarberShop.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Şifre zorunludur.")]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Şifre en az 6 karakter olmalıdır.")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Şifre en az 6 karakter olmalıdır.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Şifreyi doğrulamanız gerekiyor.")]

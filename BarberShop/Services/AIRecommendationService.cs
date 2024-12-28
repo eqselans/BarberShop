@@ -11,7 +11,8 @@ namespace BarberShop.Services
         public AIRecommendationService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.DefaultRequestHeaders.Add("x-rapidapi-key", "7ba6450b78msh52110fc28b8ecdcp174d7ajsn157cd0d65c04");
+            _httpClient.DefaultRequestHeaders.Add("x-rapidapi-key", "0a7538773amsh856aaf83cc81155p142157jsnfa4d2e0f7682");
+            // Yedek api key ce1583ac75msh0f13584327500dcp1f7be5jsnb5b993fe1482
             _httpClient.DefaultRequestHeaders.Add("x-rapidapi-host", "hairstyle-changer.p.rapidapi.com");
         }
 

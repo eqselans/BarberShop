@@ -9,13 +9,22 @@
     {
         <div class="col-md-4">
             <div class="card mb-4">
-                <img src="@service.ImageUrl" class="card-img-top" alt="@service.Name">
+                <img src="@service.ImageUrl" class="card-img-top service-image" alt="@service.Name">
                 <div class="card-body">
                     <h5 class="card-title">@service.Name</h5>
                     <p class="card-text">@service.Description</p>
                     <p><strong>Fiyat:</strong> @service.Price ₺</p>
+                    <p class="card-text"><strong>Süre:</strong> @service.DurationInMinutes<strong> Dakika</strong></p>
                 </div>
             </div>
         </div>
     }
 </div>
+
+<style>
+    .service-image {
+        width: 100%; /* Kartın genişliğine uyar */
+        height: 200px; /* Resimlerin aynı yükseklikte olması için sabit bir yükseklik */
+        object-fit: cover; /* Resmi kesmeden veya bozmadan sığdırır */
+    }
+</style>

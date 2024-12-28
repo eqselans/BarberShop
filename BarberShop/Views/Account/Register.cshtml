@@ -8,6 +8,11 @@
     <h2 class="text-center mb-4">Kayýt Ol</h2>
 
     <form asp-action="Register" method="post" class="p-4 border rounded shadow-sm bg-light">
+        <!-- Genel Hata Mesajlarý -->
+        <div class="text-danger">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+
         <!-- Ad ve Soyad -->
         <div class="form-group">
             <label for="fullName" class="form-label">Ad ve Soyad:</label>
@@ -49,4 +54,3 @@
         </div>
     </form>
 </div>
-

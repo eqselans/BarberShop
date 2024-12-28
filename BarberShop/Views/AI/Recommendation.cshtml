@@ -5,13 +5,16 @@
 <h1>Yapay Zeka Saç Modeli Önerisi</h1>
 
 <form asp-action="Recommendation" method="post" enctype="multipart/form-data">
+    <div class="text-danger">
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
     <div class="form-group">
         <label for="photo">Fotoðraf Yükleyin:</label>
-        <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required />
+        <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required onchange="previewImage(event)" />
     </div>
     <div class="row mt-3">
         <div class="col-sm-12">
-            <label for="imageOptions" class="form-label">Select Image Option:</label>
+            <label for="imageOptions" class="form-label">Yaptýrmak istediðiniz stili seçiniz:</label>
             <select id="hair_options" name="hair_options" class="form-select" required>
                 <option value="101">Kakül</option>
                 <option value="201">Uzun saç</option>
@@ -32,9 +35,19 @@
         </div>
     </div>
     <button type="submit" class="btn btn-primary mt-3">Öneri Al</button>
-
 </form>
 
+<!-- Kullanýcýdan yüklenen resmi önizleme -->
+<div class="mt-5 text-center" id="preview-container" style="display:none;">
+    <h3>Yüklediðiniz Resim:</h3>
+    <img id="preview-image"
+         src=""
+         class="img-fluid"
+         alt="Yüklenen Resim"
+         style="width: 300px; height: 300px; object-fit: cover; border: 1px solid #ccc; border-radius: 10px;" />
+</div>
+
+<!-- Önerilen Saç Modeli -->
 @if (ViewBag.RecommendedImage != null)
 {
     <div class="mt-5 text-center">
@@ -45,3 +58,20 @@
              style="width: 300px; height: 300px; object-fit: cover; border: 1px solid #ccc; border-radius: 10px;" />
     </div>
 }
+
+<script>
+    function previewImage(event) {
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = "block";
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>

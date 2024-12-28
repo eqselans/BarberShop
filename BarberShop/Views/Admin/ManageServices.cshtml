@@ -11,7 +11,6 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID</th>
             <th>Ad</th>
             <th>Açıklama</th>
             <th>Süre</th>
@@ -23,8 +22,6 @@
         @foreach (var service in Model)
         {
             <tr>
-                <td>@service.ImageUrl</td>
-                <td>@service.Id</td>
                 <td>@service.Name</td>
                 <td>@service.Description</td>
                 <td>@service.DurationInMinutes dakika</td>

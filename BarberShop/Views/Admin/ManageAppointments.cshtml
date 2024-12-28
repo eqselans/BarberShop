@@ -7,11 +7,12 @@
 
 <h2>Randevu Yönetimi</h2>
 
+<h3>Gelecek Randevular</h3>
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Müşteri</th>
+            <th>Müşteri Mail</th>
+            <th>Telefon</th>
             <th>Hizmet</th>
             <th>Çalışan</th>
             <th>Tarih</th>
@@ -20,11 +21,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var appointment in Model)
+        @foreach (var appointment in Model.Where(a => a.AppointmentDate >= DateTime.Now))
         {
-            <tr>
-                <td>@appointment.Id</td>
+            var isPending = appointment.Status == "Beklemede"; // Durumu kontrol et
+            <tr class="@(isPending ? "bg-warning text-dark" : "")">
                 <td>@appointment.UserName</td>
+                <td>@appointment.PhoneNumber</td>
                 <td>@appointment.Service.Name</td>
                 <td>@appointment.Employee.Name</td>
                 <td>@appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</td>
@@ -38,19 +40,79 @@
     </tbody>
 </table>
 
-<h2>Çalışan Yönetimi</h2>
-<ul id="employee-list"></ul>
+<h3>Geçmiş Randevular</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Müşteri Mail</th>
+            <th>Telefon</th>
+            <th>Hizmet</th>
+            <th>Çalışan</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model.Where(a => a.AppointmentDate < DateTime.Now))
+        {
+            <tr>
+                <td>@appointment.Id</td>
+                <td>@appointment.UserName</td>
+                <td>@appointment.PhoneNumber</td>
+                <td>@appointment.Service.Name</td>
+                <td>@appointment.Employee.Name</td>
+                <td>@appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@appointment.Status</td>
+                <td>
+                    <a href="@Url.Action("EditAppointment", "Admin", new { id = appointment.Id })" class="btn btn-primary btn-sm">Düzenle</a>
+                    <a href="@Url.Action("DeleteAppointment", "Admin", new { id = appointment.Id })" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<h2>Çalışanlar</h2>
+<div class="card mt-3">
+    <div class="card-body">
+        <ul id="employee-list" class="list-group">
+            <!-- API'den gelen veriler burada listelenecek -->
+        </ul>
+    </div>
+</div>
+
 
 <script>
-    fetch('https://localhost:5001/api/EmployeesApi')
-        .then(response => response.json())
-        .then(data => {
-            const employeeList = document.getElementById('employee-list');
-            data.forEach(employee => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${employee.name} (${employee.specialization})`;
-                employeeList.appendChild(listItem);
+    document.addEventListener('DOMContentLoaded', () => {
+        const employeeList = document.getElementById('employee-list');
+
+        fetch('https://localhost:44348/api/EmployeesApi')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.length === 0) {
+                    employeeList.innerHTML = '<li class="list-group-item">Hiç çalışan bulunamadı.</li>';
+                } else {
+                    data.forEach(employee => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'list-group-item';
+                        listItem.textContent = `${employee.name} (${employee.specialization})`;
+                        employeeList.appendChild(listItem);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching employees:', error);
+                employeeList.innerHTML = '<li class="list-group-item text-danger">Çalışan bilgileri yüklenemedi.</li>';
             });
-        })
-        .catch(error => console.error('Error fetching employees:', error));
+    });
 </script>
+
