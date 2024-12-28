@@ -1,0 +1,24 @@
+﻿@model BarberShop.Models.Testimonial
+
+<h2>Yorum Düzenle</h2>
+
+<form asp-action="EditTestimonial" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label for="UserName">Kullanıcı Adı</label>
+        <input asp-for="UserName" class="form-control" readonly />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Text">Yorum</label>
+        <textarea asp-for="Text" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Text" class="text-danger"></span>
+    </div>
+
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a href="@Url.Action("ManageTestimonials", "Admin")" class="btn btn-secondary">İptal</a>
+    </div>
+</form>

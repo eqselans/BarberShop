@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Yetkisiz Erişim";
+}
+
+<div class="container text-center mt-5">
+    <h1 class="text-danger">Yetkisiz Erişim</h1>
+    <p>Bu sayfaya erişim için yetkiniz bulunmamaktadır.</p>
+
+    @if (!string.IsNullOrEmpty(ViewBag.ReturnUrl))
+    {
+        <p>Gitmek istediğiniz adres: <strong>@ViewBag.ReturnUrl</strong></p>
+    }
+
+    <a href="/" class="btn btn-primary mt-3">Anasayfaya Dön</a>
+</div>

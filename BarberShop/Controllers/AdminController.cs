@@ -3,6 +3,7 @@ using BarberShop.Services;
 using BarberShop.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BarberShop.Controllers
 {
@@ -13,13 +14,20 @@ namespace BarberShop.Controllers
         private readonly IAppointmentService _appointmentService;
         private readonly IServiceService _serviceService;
         private readonly IEmployeeService _employeeService;
+        private readonly ITestimonialService _testimonialService;
 
-        public AdminController(IUserService userService, IAppointmentService appointmentService, IServiceService serviceService, IEmployeeService employeeService)
+        public AdminController(
+            IUserService userService,
+            IAppointmentService appointmentService,
+            IServiceService serviceService,
+            IEmployeeService employeeService,
+            ITestimonialService testimonialService)
         {
             _userService = userService;
             _appointmentService = appointmentService;
             _serviceService = serviceService;
             _employeeService = employeeService;
+            _testimonialService = testimonialService;
         }
 
         public IActionResult Index()
@@ -108,29 +116,6 @@ namespace BarberShop.Controllers
         }
         #endregion
 
-        #region Users Management
-        public async Task<IActionResult> ManageUsers()
-        {
-            var users = await _userService.GetAllUsersAsync();
-            var userViewModels = new List<UserViewModel>();
-
-            foreach (var user in users)
-            {
-                var role = await _userService.GetUserRoleAsync(user);
-                userViewModels.Add(new UserViewModel
-                {
-                    Id = user.Id.ToString(),
-                    FullName = user.FullName,
-                    Email = user.Email,
-                    PhoneNumber = user.PhoneNumber,
-                    Role = role
-                });
-            }
-
-            return View(userViewModels);
-        }
-        #endregion
-
         #region Employees Management
         public async Task<IActionResult> ManageEmployee()
         {
@@ -183,5 +168,111 @@ namespace BarberShop.Controllers
         {
             return View();
         }
+        #region Users Management
+        public async Task<IActionResult> ManageUsers()
+        {
+            var users = await _userService.GetAllUsersAsync();
+            var userViewModels = new List<UserViewModel>();
+
+            foreach (var user in users)
+            {
+                var role = await _userService.GetUserRoleAsync(user);
+                userViewModels.Add(new UserViewModel
+                {
+                    Id = user.Id.ToString(),
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Role = role
+                });
+            }
+
+            return View(userViewModels);
+        }
+
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _userService.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userViewModel = new UserViewModel
+            {
+                Id = user.Id.ToString(),
+                FullName = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Role = await _userService.GetUserRoleAsync(user)
+            };
+
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(UserViewModel userViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await _userService.UpdateUserAsync(userViewModel);
+                if (success)
+                {
+                    return RedirectToAction(nameof(ManageUsers));
+                }
+            }
+
+            return View(userViewModel);
+        }
+
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var success = await _userService.DeleteUserAsync(id);
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(ManageUsers));
+        }
+        #endregion
+
+        public async Task<IActionResult> ManageTestimonials()
+        {
+            var testimonials = await _testimonialService.GetAllTestimonialsAsync();
+            return View(testimonials);
+        }
+
+        public async Task<IActionResult> EditTestimonial(int id)
+        {
+            var testimonial = await _testimonialService.GetTestimonialByIdAsync(id);
+            if (testimonial == null)
+            {
+                return NotFound();
+            }
+
+            return View(testimonial);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditTestimonial(Testimonial testimonial)
+        {
+            if (ModelState.IsValid)
+            {
+                await _testimonialService.UpdateTestimonialAsync(testimonial);
+                return RedirectToAction(nameof(ManageTestimonials));
+            }
+
+            return View(testimonial);
+        }
+
+        public async Task<IActionResult> DeleteTestimonial(int id)
+        {
+            await _testimonialService.DeleteTestimonialAsync(id);
+            return RedirectToAction(nameof(ManageTestimonials));
+        }
+
+
+
     }
 }

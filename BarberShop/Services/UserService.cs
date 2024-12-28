@@ -1,4 +1,5 @@
 ﻿using BarberShop.Models;
+using BarberShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,5 +35,33 @@ namespace BarberShop.Services
             var PhoneNumber = await _userManager.GetPhoneNumberAsync(user);
             return PhoneNumber;
         }
+        public async Task<User> GetUserByIdAsync(string id)
+        {
+            return await _userManager.FindByIdAsync(id);
+        }
+
+        public async Task<bool> UpdateUserAsync(UserViewModel userViewModel)
+        {
+            var user = await _userManager.FindByIdAsync(userViewModel.Id);
+            if (user == null) return false;
+
+            user.FullName = userViewModel.FullName;
+            user.PhoneNumber = userViewModel.PhoneNumber;
+            user.Email = userViewModel.Email;
+            user.UserName = userViewModel.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> DeleteUserAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return false;
+
+            var result = await _userManager.DeleteAsync(user);
+            return result.Succeeded;
+        }
+
     }
 }
